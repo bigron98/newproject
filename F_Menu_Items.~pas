@@ -1,0 +1,467 @@
+unit F_Menu_Items;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
+  StdCtrls, dxCntner, dxEditor, dxEdLib, dxDBELib, Buttons, JvGradient,
+  ExtCtrls, ImgList, ComCtrls, ToolWin, JvToolBar, dxTL, dxDBCtrl, dxDBGrid, DB,
+  dxDBTLCl, dxGrClms, dxExEdtr, ExtDlgs, JvSpin, Spin, DBCtrls, Grids,
+  DBGrids, Menus;
+
+type
+  TMenu_Items = class(TForm)
+    PageControl1: TPageControl;
+    TabSheet1: TTabSheet;
+    TabSheet2: TTabSheet;
+    JvToolBar1: TJvToolBar;
+    Tool_First: TToolButton;
+    Tool_Prior: TToolButton;
+    Tool_Next: TToolButton;
+    Tool_Last: TToolButton;
+    Tool_Append: TToolButton;
+    Tool_Delete: TToolButton;
+    Tool_Post: TToolButton;
+    ToolButton1: TToolButton;
+    ImageList1: TImageList;
+    StatusBar1: TStatusBar;
+    OpenPictureDialog1: TOpenPictureDialog;
+    SpinButton1: TSpinButton;
+    dx_Menu_Category: TdxDBGrid;
+    dx_Menu_CategoryID_Menu_Category: TdxDBGridMaskColumn;
+    dx_Menu_CategoryMenu_Category_Name: TdxDBGridColumn;
+    dx_Menu_CategoryMenu_Category_Kind: TdxDBGridColumn;
+    dx_Menu_CategoryMenu_Category_Number: TdxDBGridMaskColumn;
+    dx_Menu_CategoryMenu_Category_Pictures: TdxDBGridColumn;
+    dx_Menu_CategoryMenu_Category_Set: TdxDBGridCheckColumn;
+    TabSheet3: TTabSheet;
+    dxDBMemo1: TdxDBMemo;
+    Label4: TLabel;
+    Label1: TLabel;
+    dxDBCheckEdit1: TdxDBCheckEdit;
+    dxDBEdit5: TdxDBEdit;
+    Label6: TLabel;
+    Label7: TLabel;
+    dxDBEdit4: TdxDBEdit;
+    dxDBEdit3: TdxDBEdit;
+    Label3: TLabel;
+    Label5: TLabel;
+    dxDBEdit2: TdxDBEdit;
+    Label2: TLabel;
+    dxDBEdit1: TdxDBEdit;
+    Label13: TLabel;
+    DBText1: TDBText;
+    dx_Calculation: TdxDBGrid;
+    dx_CalculationID_Calculation: TdxDBGridMaskColumn;
+    dx_CalculationID_Food_Items: TdxDBGridMaskColumn;
+    dx_CalculationID_Menu_Items: TdxDBGridMaskColumn;
+    dx_CalculationFood_Items_Name: TdxDBGridButtonColumn;
+    dx_CalculationUnit_Measurement_Name: TdxDBGridMaskColumn;
+    dx_CalculationPrice_Items: TdxDBGridMaskColumn;
+    dx_CalculationAmount_Calculation: TdxDBGridMaskColumn;
+    dx_CalculationCalculation_Price: TdxDBGridColumn;
+    Panel4: TPanel;
+    Label8: TLabel;
+    Label9: TLabel;
+    Label10: TLabel;
+    Label11: TLabel;
+    Label12: TLabel;
+    dxDBEdit6: TdxDBEdit;
+    dxDBEdit7: TdxDBEdit;
+    dxDBEdit8: TdxDBEdit;
+    dxDBEdit9: TdxDBEdit;
+    dxDBEdit10: TdxDBEdit;
+    dx_Menu_Items: TdxDBGrid;
+    dx_Menu_ItemsID_Menu_Items: TdxDBGridMaskColumn;
+    dx_Menu_ItemsID_Menu_Category: TdxDBGridMaskColumn;
+    dx_Menu_ItemsMenu_Items_Name: TdxDBGridColumn;
+    dx_Menu_ItemsMenu_Items_Weight: TdxDBGridColumn;
+    dx_Menu_ItemsMenu_Items_Price1: TdxDBGridMaskColumn;
+    dx_Menu_ItemsMenu_Items_Price2: TdxDBGridMaskColumn;
+    dx_Menu_ItemsMenu_Items_Price3: TdxDBGridMaskColumn;
+    dx_Menu_ItemsMenu_Items_Set: TdxDBGridCheckColumn;
+    dx_Menu_ItemsMenu_Items_Number: TdxDBGridMaskColumn;
+    dx_Menu_ItemsMenu_Items_Food: TdxDBGridMemoColumn;
+    dx_Menu_ItemsObsh_Sum: TdxDBGridColumn;
+    dx_Menu_Itemsnal_20: TdxDBGridColumn;
+    dx_Menu_Itemsnal_5: TdxDBGridColumn;
+    dx_Menu_Itemsnacenka: TdxDBGridColumn;
+    Splitter1: TSplitter;
+    Popup_Calculation: TPopupMenu;
+    N1: TMenuItem;
+    N2: TMenuItem;
+    ToolButton2: TToolButton;
+    Popup_Print: TPopupMenu;
+    N3: TMenuItem;
+    N4: TMenuItem;
+    ToolButton4: TToolButton;
+    ToolButton5: TToolButton;
+    procedure Tool_FirstClick(Sender: TObject);
+    procedure Tool_PriorClick(Sender: TObject);
+    procedure Tool_NextClick(Sender: TObject);
+    procedure Tool_LastClick(Sender: TObject);
+    procedure Tool_AppendClick(Sender: TObject);
+    procedure Tool_DeleteClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure SpinButton1DownClick(Sender: TObject);
+    procedure SpinButton1UpClick(Sender: TObject);
+    procedure dx_CalculationCalcSummary(Sender: TObject);
+    procedure dx_Menu_ItemsChangeNode(Sender: TObject; OldNode,
+      Node: TdxTreeListNode);
+    procedure dx_Menu_ItemsDblClick(Sender: TObject);
+    procedure dx_Menu_ItemsKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure dx_CalculationFood_Items_NameButtonClick(Sender: TObject;
+      AbsoluteIndex: Integer);
+    procedure N1Click(Sender: TObject);
+    procedure N2Click(Sender: TObject);
+    procedure ToolButton2Click(Sender: TObject);
+    procedure N3Click(Sender: TObject);
+    procedure N4Click(Sender: TObject);
+    procedure Tool_PostClick(Sender: TObject);
+    procedure ToolButton4Click(Sender: TObject);
+    procedure ToolButton5Click(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Menu_Items: TMenu_Items;
+
+implementation
+uses F_Depot, F_Global_Var, F_Food_Items, F_Preview;
+{$R *.DFM}
+
+procedure TMenu_Items.Tool_FirstClick(Sender: TObject);
+begin
+  Depot.ADO_Menu_Items.First;
+end;
+
+procedure TMenu_Items.Tool_PriorClick(Sender: TObject);
+begin
+  Depot.ADO_Menu_Items.Prior;
+end;
+
+procedure TMenu_Items.Tool_NextClick(Sender: TObject);
+begin
+  Depot.ADO_Menu_Items.Next;
+end;
+
+procedure TMenu_Items.Tool_LastClick(Sender: TObject);
+begin
+  Depot.ADO_Menu_Items.Last;
+end;
+
+procedure TMenu_Items.Tool_AppendClick(Sender: TObject);
+begin
+  Depot.ADO_Menu_Items.Append;
+  dx_Menu_ItemsMenu_Items_Name.DisableEditor:=false;
+  Depot.ADO_Menu_ItemsMenu_Items_Name.FocusControl;
+end;
+
+procedure TMenu_Items.Tool_DeleteClick(Sender: TObject);
+begin
+  if Depot.ADO_Menu_Items.RecordCount>0 then Depot.ADO_Menu_Items.Delete;
+end;
+
+procedure TMenu_Items.FormShow(Sender: TObject);
+begin
+  Can_Append:=True;
+  Depot.ADO_Unit_Measurement.Active:=True;
+  Now_Activ:=Depot.ADO_Menu_Category.Active;
+  Now_Activ_Children:=Depot.ADO_Menu_Items.Active;
+
+  Depot.ADO_Menu_Category.Open;
+  Depot.ADO_Menu_Items.Open;
+  Depot.ADO_Menu_Items_All.Open;
+  Depot.ADO_Calculation.Open;
+
+  if Depot.ADO_Menu_Service.Active then
+  begin
+    Depot.ADO_Menu_Category.Locate('ID_Menu_Category',Depot.ADO_Menu_Items_All.Lookup('ID_Menu_Items',Depot.ADO_Menu_ServiceID_Menu_Items.Value,'ID_Menu_Category'),[loCaseInsensitive]);
+    Depot.ADO_Menu_Items.Locate('ID_Menu_Items',Depot.ADO_Menu_ServiceID_Menu_Items.Value,[loCaseInsensitive]);
+  end;
+  dx_Menu_Category.SetFocus;
+
+end;
+
+procedure TMenu_Items.FormClose(Sender: TObject;
+  var Action: TCloseAction);
+begin
+  Depot.ADO_Menu_Category.Active:=Now_Activ;
+  Depot.ADO_Menu_Items.Active:=Now_Activ_Children;
+  Depot.ADO_Unit_Measurement.Active:=false;
+end;
+
+procedure TMenu_Items.SpinButton1DownClick(Sender: TObject);
+begin
+  Now_Key:=Depot.ADO_Menu_ItemsID_Menu_Items.Value;
+    if Depot.ADO_Menu_Items.RecNo<Depot.ADO_Menu_Items.RecordCount then
+    with Depot.ADO_Menu_Items do
+    begin
+      DisableControls;
+      NextValue := Depot.ADO_Menu_ItemsMenu_Items_Number.Value;
+      SavePlace := GetBookmark;
+      Next;
+      Edit;
+      PrevValue := Depot.ADO_Menu_ItemsMenu_Items_Number.Value;
+      Depot.ADO_Menu_ItemsMenu_Items_Number.Value:=NextValue;
+      GotoBookmark(SavePlace);
+      Edit;
+      Depot.ADO_Menu_ItemsMenu_Items_Number.Value:=PrevValue;
+      FreeBookmark(SavePlace);
+      Post;
+      Requery;
+      EnableControls;
+    end;
+    Depot.ADO_Menu_Items.Locate('ID_Menu_Items',Now_Key,[loCaseInsensitive]);
+end;
+
+procedure TMenu_Items.SpinButton1UpClick(Sender: TObject);
+begin
+
+  Now_Key:=Depot.ADO_Menu_ItemsID_Menu_Items.Value;
+    if Depot.ADO_Menu_Items.RecNo>1 then
+    with Depot.ADO_Menu_Items do
+    begin
+      DisableControls;
+      NextValue := Depot.ADO_Menu_ItemsMenu_Items_Number.Value;
+      SavePlace := GetBookmark;
+      Prior;
+      Edit;
+      PrevValue := Depot.ADO_Menu_ItemsMenu_Items_Number.Value;
+      Depot.ADO_Menu_ItemsMenu_Items_Number.Value:=NextValue;
+      GotoBookmark(SavePlace);
+      Edit;
+      Depot.ADO_Menu_ItemsMenu_Items_Number.Value:=PrevValue;
+      FreeBookmark(SavePlace);
+      Post;
+      Requery;
+      EnableControls;
+    end;
+    Depot.ADO_Menu_Items.Locate('ID_Menu_Items',Now_Key,[loCaseInsensitive]);
+end;
+
+procedure TMenu_Items.dx_CalculationCalcSummary(Sender: TObject);
+begin
+  //Depot.ADO_Menu_Items.DisableControls;
+  Depot.ADO_Menu_Items.Edit;
+  Depot.ADO_Menu_ItemsObsh_Sum.Value:=Round(Menu_Items.dx_CalculationCalculation_Price.SummaryFooterValue*100)/100;
+  Depot.ADO_Menu_Itemsnal_5.Value:=Round(Depot.ADO_Menu_ItemsMenu_Items_Price1.Value*5/105*100)/100;
+  Depot.ADO_Menu_Itemsnal_20.Value:=Round((Depot.ADO_Menu_ItemsMenu_Items_Price1.Value-Depot.ADO_Menu_Itemsnal_5.Value)*20/120*100)/100;
+  Depot.ADO_Menu_Itemsnacenka.Value:=Depot.ADO_Menu_ItemsMenu_Items_Price1.Value-Depot.ADO_Menu_Itemsnal_5.Value-Depot.ADO_Menu_Itemsnal_20.Value-Depot.ADO_Menu_ItemsObsh_Sum.Value;
+  //Depot.ADO_Menu_Items.EnableControls;
+end;
+
+procedure TMenu_Items.dx_Menu_ItemsChangeNode(Sender: TObject; OldNode,
+  Node: TdxTreeListNode);
+begin
+  dx_Menu_ItemsMenu_Items_Name.DisableEditor:=true;
+end;
+
+procedure TMenu_Items.dx_Menu_ItemsDblClick(Sender: TObject);
+begin
+  dx_Menu_ItemsMenu_Items_Name.DisableEditor:=false;
+  Depot.ADO_Menu_ItemsMenu_Items_Name.FocusControl;
+end;
+
+procedure TMenu_Items.dx_Menu_ItemsKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  if  (Shift = [ssShift]) then
+  begin
+    if (key=VK_UP) then
+      begin
+        SpinButton1UpClick(Sender);
+        if Depot.ADO_Menu_Items.RecNo>1 then Depot.ADO_Menu_Items.Next;
+      end;
+    if (key=VK_DOWN) then
+      begin
+        SpinButton1DownClick(Sender);
+        if Depot.ADO_Menu_Items.RecNo<Depot.ADO_Menu_Items.RecordCount then Depot.ADO_Menu_Items.Prior;
+      end;
+  end;
+end;
+
+procedure TMenu_Items.dx_CalculationFood_Items_NameButtonClick(
+  Sender: TObject; AbsoluteIndex: Integer);
+begin
+    if Food_Items.ShowModal = mrOk then
+    begin
+      Depot.ADO_Calculation.Edit;
+      Depot.ADO_CalculationID_Food_Items.AsFloat := CurrentID;
+      //Depot.ADO_CalcKol_Calc.AsFloat := 0;
+      Depot.ADO_CalculationAmount_Calculation.FocusControl;
+    end;
+end;
+
+procedure TMenu_Items.N1Click(Sender: TObject);
+begin
+  Depot.ADO_Calculation.Append;
+end;
+
+procedure TMenu_Items.N2Click(Sender: TObject);
+begin
+  if Depot.ADO_Calculation.RecordCount>0 then Depot.ADO_Calculation.Delete;
+end;
+
+procedure TMenu_Items.ToolButton2Click(Sender: TObject);
+var i:integer;
+begin
+  Depot.ADO_Fonts.Open;
+  Depot.Key_All.Open;
+
+  Now_ID:=Depot.ADO_Menu_ItemsID_Menu_Items.Value;
+
+  if PageControl1.ActivePageIndex=0 then
+  begin
+  Depot.ADO_Menu_Items.DisableControls;
+    if Depot.ADO_Menu_CategoryMenu_Category_Set.Value=true then
+    begin
+      vis:=false;
+      Name_Rep:='Menu.frf';
+    end
+    else
+    begin
+      vis:=true;
+      Name_Rep:='Menu1.frf'
+    end;
+
+  Depot.frReport.Preview := Preview.frPreview1;
+  Depot.frReport.Dataset:=Depot.fr_Menu_Items;
+  //WPath := ExtractFilePath(ParamStr(0));
+  Depot.frReport.LoadFromFile(WPath + 'Reports\'+Name_Rep);
+
+  for i:=1 to 5 do
+  begin
+    Rep_Var:='Size_'+IntToStr(i);
+    Depot.frReport.Dictionary.Variables[Rep_Var]:=Depot.ADO_Fonts.Lookup('ID_Font',i,'Size_Font');
+    Rep_Var:='Style_'+IntToStr(i);
+    Style_Var:=Depot.ADO_Fonts.Lookup('ID_Font',i,'Style_Font');
+    if Style_Var='Жирный' then (Depot.frReport.Dictionary.Variables[Rep_Var]:=1);
+    if Style_Var='Курсив' then (Depot.frReport.Dictionary.Variables[Rep_Var]:=2);
+    if Style_Var='Жирный Курсив' then (Depot.frReport.Dictionary.Variables[Rep_Var]:=3);
+    if Style_Var='Обычный' then (Depot.frReport.Dictionary.Variables[Rep_Var]:=4);
+  end;
+
+  if Depot.ADO_Menu_CategoryMenu_Category_Pictures.Value='' then
+  Depot.frReport.Dictionary.Variables['Path_Pic']:=''''+Depot.Key_AllPicture.Value+ ''''
+  else Depot.frReport.Dictionary.Variables['Path_Pic']:=''''+Depot.ADO_Menu_CategoryMenu_Category_Pictures.Value+ '''';
+  //Depot.ADO_Key.Close;
+  Preview.frPreview1.PageWidth;
+  Depot.frReport.ShowReport;
+  Depot.ADO_Menu_Items.Locate('ID_Menu_Items',Now_ID,[loCaseInsensitive]);
+  Depot.ADO_Menu_Items.EnableControls;
+  Preview.Show;
+  end;
+
+  if PageControl1.ActivePageIndex=2 then
+  begin
+    //TabSheet3.Enabled:=not (Depot.ADO_COURSEName_Course.Value='');
+    Depot.ADO_Calculation.DisableControls;
+    //Depot.Calc_Total;
+    Name_Rep:='Calc.frf';
+    Depot.frReport.Preview := Preview.frPreview1;
+    Depot.frReport.Dataset:=Depot.fr_Calculation;
+    Depot.frReport.LoadFromFile(WPath + 'Reports\'+Name_Rep);
+    Preview.frPreview1.PageWidth;
+    Depot.frReport.ShowReport;
+    Depot.ADO_Calculation.First;
+    Depot.ADO_Calculation.EnableControls;
+    Preview.Show;
+  end;
+
+end;
+
+procedure TMenu_Items.N3Click(Sender: TObject);
+var i:integer;
+begin
+  Depot.ADO_Fonts.Open;
+  Depot.Key_All.Open;
+
+  Now_ID:=Depot.ADO_Menu_ItemsID_Menu_Items.Value;
+
+
+  Depot.ADO_Menu_Items.DisableControls;
+    if Depot.ADO_Menu_CategoryMenu_Category_Set.Value=true then
+    begin
+      vis:=false;
+      Name_Rep:='Menu.frf';
+    end
+    else
+    begin
+      vis:=true;
+      Name_Rep:='Menu1.frf'
+    end;
+
+  Depot.frReport.Preview := Preview.frPreview1;
+  Depot.frReport.Dataset:=Depot.fr_Menu_Items;
+  //WPath := ExtractFilePath(ParamStr(0));
+  Depot.frReport.LoadFromFile(WPath + 'Reports\'+Name_Rep);
+
+  for i:=1 to 5 do
+  begin
+    Rep_Var:='Size_'+IntToStr(i);
+    Depot.frReport.Dictionary.Variables[Rep_Var]:=Depot.ADO_Fonts.Lookup('ID_Font',i,'Size_Font');
+    Rep_Var:='Style_'+IntToStr(i);
+    Style_Var:=Depot.ADO_Fonts.Lookup('ID_Font',i,'Style_Font');
+    if Style_Var='Жирный' then (Depot.frReport.Dictionary.Variables[Rep_Var]:=1);
+    if Style_Var='Курсив' then (Depot.frReport.Dictionary.Variables[Rep_Var]:=2);
+    if Style_Var='Жирный Курсив' then (Depot.frReport.Dictionary.Variables[Rep_Var]:=3);
+    if Style_Var='Обычный' then (Depot.frReport.Dictionary.Variables[Rep_Var]:=4);
+  end;
+
+  if Depot.ADO_Menu_CategoryMenu_Category_Pictures.Value='' then
+  Depot.frReport.Dictionary.Variables['Path_Pic']:=''''+Depot.Key_AllPicture.Value+ ''''
+  else Depot.frReport.Dictionary.Variables['Path_Pic']:=''''+Depot.ADO_Menu_CategoryMenu_Category_Pictures.Value+ '''';
+  //Depot.ADO_Key.Close;
+  Preview.frPreview1.PageWidth;
+  Depot.frReport.ShowReport;
+  Depot.ADO_Menu_Items.Locate('ID_Menu_Items',Now_ID,[loCaseInsensitive]);
+  Depot.ADO_Menu_Items.EnableControls;
+  Preview.Show;
+end;
+
+procedure TMenu_Items.N4Click(Sender: TObject);
+begin
+    //TabSheet3.Enabled:=not (Depot.ADO_COURSEName_Course.Value='');
+    Depot.ADO_Calculation.DisableControls;
+    //Depot.Calc_Total;
+    Name_Rep:='Calc.frf';
+    Depot.frReport.Preview := Preview.frPreview1;
+    Depot.frReport.Dataset:=Depot.fr_Calculation;
+    Depot.frReport.LoadFromFile(WPath + 'Reports\'+Name_Rep);
+    Preview.frPreview1.PageWidth;
+    Depot.frReport.ShowReport;
+    Depot.ADO_Calculation.First;
+    Depot.ADO_Calculation.EnableControls;
+    Preview.Show;
+end;
+
+procedure TMenu_Items.Tool_PostClick(Sender: TObject);
+begin
+  if Depot.ADO_Menu_Items.State in [dsEdit, dsInsert] then Depot.ADO_Menu_Items.Post; 
+end;
+
+procedure TMenu_Items.ToolButton4Click(Sender: TObject);
+begin
+  if Depot.ADO_Menu_Items.State in [dsEdit, dsInsert] then Depot.ADO_Menu_Items.Post;
+  Depot.ADO_Menu_Items_All.Requery;
+  Close;
+end;
+
+procedure TMenu_Items.ToolButton5Click(Sender: TObject);
+begin
+  if Depot.ADO_Menu_Items.Eof and Depot.ADO_Menu_Items.Bof then
+  CurrentID:=0
+  else
+  CurrentID:=Depot.ADO_Menu_ItemsID_Menu_Items.Value;
+  if Depot.ADO_Menu_Items.State in [dsEdit, dsInsert] then Depot.ADO_Menu_Items.Post;
+  Depot.ADO_Menu_Items_All.Requery;
+  ModalResult:=mrOk;
+end;
+
+end.
